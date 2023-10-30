@@ -101,8 +101,8 @@ def get_results(races):
         #    results[race]['Status']['Updated'] = False
     return results
     
-def send_update(results, candidates, races, stopped):
-    client = WebClient('xoxb-65110774224-6040954929968-aDZbaNqNyAXOMSKdQiPE6y4Y')
+def send_update(token, results, candidates, races, stopped):
+    client = WebClient(token)
     all_results = "This is a test of the Advocate elections app.\n"
     for race in results:
         if results[race]['Status']['Updated'] == True and race not in stopped:
@@ -183,7 +183,7 @@ def main():
             results = get_results(races)
             current_time = datetime.now().strftime('%m/%d/%Y %H:%M:%S')
             print(f'[{current_time}] Sending new results.')
-            send_update(results, candidates, races, stopped)
+            send_update(slack_token, results, candidates, races, stopped)
             current_time = datetime.now().strftime('%m/%d/%Y %H:%M:%S')
             print(f"[{current_time}] Results sent.")
         last_update = update_time
